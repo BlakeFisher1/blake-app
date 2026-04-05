@@ -64,8 +64,8 @@
     .box-breath-square { width: 120px; height: 120px; border: 3px solid #fbbf24; border-radius: 12px; position: relative; }
     .box-breath-dot { width: 14px; height: 14px; border-radius: 50%; background: #fbbf24; position: absolute; box-shadow: 0 0 12px rgba(251,191,36,0.6); }
 
-    .section-scroll { height: calc(100dvh - 80px); overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-top: 20px; }
-    .nav-bar { height: 80px; }
+    .section-scroll { height: 100%; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-top: 16px; }
+    .nav-bar { height: 72px; }
 
     .card { background: linear-gradient(135deg, #1a2236, #111827); border: 1px solid rgba(251,191,36,0.08); border-radius: 18px; padding: 22px 24px; margin-bottom: 14px; }
     .card:hover { border-color: rgba(251,191,36,0.15); }
@@ -86,11 +86,11 @@
     .toast { animation: toast-in 0.3s ease-out both; position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 60; }
     .toast-exit { animation: toast-out 0.3s ease-out both; }
 
-    /* Safe areas for Dynamic Island + bottom bar */
+    /* Safe areas for Dynamic Island + home indicator */
     @supports (padding-top: env(safe-area-inset-top)) {
-      .section-scroll { padding-top: calc(16px + env(safe-area-inset-top)); height: calc(100dvh - 80px - env(safe-area-inset-bottom)); }
-      .nav-bar { padding-bottom: env(safe-area-inset-bottom); height: calc(80px + env(safe-area-inset-bottom)); }
-      .toast { bottom: calc(100px + env(safe-area-inset-bottom)); }
+      .section-scroll { padding-top: calc(12px + env(safe-area-inset-top)); }
+      .nav-bar { padding-bottom: env(safe-area-inset-bottom); height: calc(72px + env(safe-area-inset-bottom)); }
+      .toast { bottom: calc(90px + env(safe-area-inset-bottom)); }
     }
 
     @media (min-width: 640px) {
@@ -300,7 +300,7 @@
       useEffect(() => { shuffle(); }, []);
 
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">Morning Armor</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Your Receipts</h1>
@@ -390,7 +390,7 @@
       if (sit) {
         const relevant = getRelevantReceipt(sit.id);
         return (
-          <div className="section-scroll px-6 pt-6 pb-10">
+          <div className="section-scroll px-6 pb-10">
             <button onClick={() => setSelected(null)} className="flex items-center gap-2 text-amber-400 font-display font-semibold text-sm mb-6">
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round"/></svg>
               Back
@@ -428,7 +428,7 @@
 
       // Situation selection grid
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">Pre-Game</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Lock In</h1>
@@ -488,7 +488,7 @@
       function doDelete() { setReceipts(prev => prev.filter(e => e.id !== deleteId)); setDeleteId(null); }
 
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">Wins</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Stack Your Proof</h1>
@@ -601,7 +601,7 @@
       const progress = (elapsed / totalDuration) * 100;
 
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">Courtroom Closer</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Shut It Down</h1>
@@ -649,7 +649,7 @@
       function handleKeyDown(e) { if (e.key === 'Enter') addEntry(); }
 
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">The Wall</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Nothing Bad Happened</h1>
@@ -759,7 +759,7 @@
     function QuickCalm() {
       const [showOverlay, setShowOverlay] = useState(false);
       return (
-        <div className="section-scroll px-6 pt-6 pb-10">
+        <div className="section-scroll px-6 pb-10">
           <div className="fade-in-up">
             <p className="text-amber-400 font-display font-semibold text-sm tracking-widest uppercase mb-2">Quick Calm</p>
             <h1 className="font-display font-extrabold text-3xl leading-tight mb-1" style={{color:'#fefce8'}}>Ground Yourself</h1>
@@ -831,8 +831,8 @@
 
       return (
         <div className="flex flex-col h-full" style={{background:'#0a0f1e'}}>
-          <div className="flex-1 overflow-hidden" key={tab}>
-            <div style={{animation:'fadeIn 0.2s ease-out'}}>{renderTab()}</div>
+          <div className="flex-1 overflow-hidden" style={{minHeight:0}} key={tab}>
+            <div style={{animation:'fadeIn 0.2s ease-out', height:'100%'}}>{renderTab()}</div>
           </div>
           <Toast message={toastMsg} visible={toastVisible} />
           <nav className="nav-bar flex items-center justify-around px-2 flex-shrink-0" style={{background:'linear-gradient(to top, #0a0f1e, rgba(10,15,30,0.97))', borderTop:'1px solid rgba(255,255,255,0.06)'}}>
