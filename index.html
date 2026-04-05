@@ -35,10 +35,9 @@
   </script>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html { height: 100%; }
-    body { margin: 0; padding: 0; height: 100%; height: 100dvh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; }
-    #root { height: 100%; }
-    body { font-family: 'DM Sans', sans-serif; background: #0a0f1e; color: #f1f5f9; line-height: 1.75; letter-spacing: 0.02em; overflow: hidden; font-size: 17px; }
+    html, body { margin: 0; padding: 0; height: 100dvh; height: 100vh; overflow: hidden; }
+    #root { height: 100dvh; height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: 'DM Sans', sans-serif; background: #0a0f1e; color: #f1f5f9; line-height: 1.75; letter-spacing: 0.02em; font-size: 17px; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -66,8 +65,8 @@
     .box-breath-square { width: 120px; height: 120px; border: 3px solid #fbbf24; border-radius: 12px; position: relative; }
     .box-breath-dot { width: 14px; height: 14px; border-radius: 50%; background: #fbbf24; position: absolute; box-shadow: 0 0 12px rgba(251,191,36,0.6); }
 
-    .section-scroll { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-top: 16px; }
-    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; }
+    .section-scroll { flex: 1; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-top: 16px; }
+    .nav-bar { flex-shrink: 0; }
 
     .card { background: linear-gradient(135deg, #1a2236, #111827); border: 1px solid rgba(251,191,36,0.08); border-radius: 18px; padding: 22px 24px; margin-bottom: 14px; }
     .card:hover { border-color: rgba(251,191,36,0.15); }
@@ -90,9 +89,9 @@
 
     /* Safe areas for Dynamic Island + home indicator */
     @supports (padding-top: env(safe-area-inset-top)) {
-      .section-scroll { padding-top: calc(12px + env(safe-area-inset-top)); padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
-      .nav-bar { padding-bottom: env(safe-area-inset-bottom); padding-top: 12px; }
-      .toast { bottom: calc(90px + env(safe-area-inset-bottom)); }
+      .section-scroll { padding-top: calc(12px + env(safe-area-inset-top)); }
+      .nav-bar { padding-bottom: env(safe-area-inset-bottom); }
+      .toast { bottom: calc(80px + env(safe-area-inset-bottom)); }
     }
 
     @media (min-width: 640px) {
@@ -832,14 +831,14 @@
       };
 
       return (
-        <div style={{background:'#0a0f1e', position:'relative', width:'100%', height:'100%'}}>
-          <div key={tab} style={{position:'absolute', inset:0}}>
-            <div style={{animation:'fadeIn 0.2s ease-out', height:'100%'}}>{renderTab()}</div>
+        <div style={{background:'#0a0f1e', display:'flex', flexDirection:'column', height:'100dvh', height:'100vh'}}>
+          <div key={tab} style={{flex:1, overflow:'hidden', minHeight:0}}>
+            {renderTab()}
           </div>
           <Toast message={toastMsg} visible={toastVisible} />
-          <nav className="nav-bar flex items-center justify-around px-2" style={{background:'#0a0f1e', borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+          <nav className="nav-bar flex items-start justify-around px-2 pt-2" style={{background:'#0a0f1e', borderTop:'1px solid rgba(255,255,255,0.08)'}}>
             {NAV_ITEMS.map(item => (
-              <button key={item.id} onClick={() => setTab(item.id)} className="flex flex-col items-center gap-1 py-2 px-2 transition-all" style={{minWidth:'54px', minHeight:'52px'}} aria-label={item.label}>
+              <button key={item.id} onClick={() => setTab(item.id)} className="flex flex-col items-center gap-1 px-2 transition-all" style={{minWidth:'54px', minHeight:'48px'}} aria-label={item.label}>
                 <NavIcon path={item.icon} active={tab === item.id} />
                 <span className="font-display font-semibold" style={{color:tab===item.id?'#fbbf24':'#f1f5f9', opacity:tab===item.id?1:0.35, transition:'all 0.2s', fontSize:'0.7rem', letterSpacing:'0.03em'}}>{item.label}</span>
               </button>
