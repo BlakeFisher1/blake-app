@@ -87,12 +87,11 @@
     .toast { animation: toast-in 0.3s ease-out both; position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 60; }
     .toast-exit { animation: toast-out 0.3s ease-out both; }
 
-    /* Safe areas for Dynamic Island + home indicator */
+    /* Safe area for Dynamic Island at top only */
     @supports (padding-top: env(safe-area-inset-top)) {
       .section-scroll { padding-top: calc(12px + env(safe-area-inset-top)); }
-      .nav-bar { padding-bottom: env(safe-area-inset-bottom); }
-      .toast { bottom: calc(80px + env(safe-area-inset-bottom)); }
     }
+    .nav-bar { padding-bottom: 8px; }
 
     @media (min-width: 640px) {
       .section-scroll { max-width: 520px; margin: 0 auto; }
